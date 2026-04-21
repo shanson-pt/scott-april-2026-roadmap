@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Goals-Based Roadmap 2026 — Product & Technology</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --color-text-primary: #1a1a18;
+    --color-text-secondary: #5f5e5a;
+    --color-text-tertiary: #888780;
+    --color-background-primary: #ffffff;
+    --color-background-secondary: #f5f4f0;
+    --color-border-tertiary: rgba(0,0,0,0.12);
+    --color-border-secondary: rgba(0,0,0,0.22);
+    --color-border-primary: rgba(0,0,0,0.32);
+    --border-radius-md: 8px;
+    --border-radius-lg: 12px;
+    --font-sans: system-ui, -apple-system, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --color-text-primary: #f0ede6;
+      --color-text-secondary: #a8a49c;
+      --color-text-tertiary: #6e6c66;
+      --color-background-primary: #1c1c1a;
+      --color-background-secondary: #252522;
+      --color-border-tertiary: rgba(255,255,255,0.10);
+      --color-border-secondary: rgba(255,255,255,0.18);
+      --color-border-primary: rgba(255,255,255,0.28);
+    }
+  }
+  body {
+    font-family: var(--font-sans);
+    background: var(--color-background-primary);
+    color: var(--color-text-primary);
+    padding: 2rem 1.5rem;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
+
+  .nav { display: flex; gap: 6px; margin-bottom: 1.5rem; flex-wrap: wrap; }
+  .ntab { font-size: 12px; padding: 5px 14px; border-radius: 20px; border: 0.5px solid var(--color-border-secondary); background: transparent; color: var(--color-text-secondary); cursor: pointer; font-family: var(--font-sans); }
+  .ntab.active { background: var(--color-background-secondary); color: var(--color-text-primary); border-color: var(--color-border-primary); }
+
+  .view { display: none; }
+  .view.active { display: block; }
+
+  .outcome-strip { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1.5rem; }
+  .oc-pill { flex: 1; min-width: 140px; padding: 12px 14px; border-radius: var(--border-radius-md); border: 0.5px solid; }
+  .oc-pill-label { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
+  .oc-pill-desc { font-size: 12px; line-height: 1.4; }
+  .oc-eff { background: #EAF3DE; border-color: #97C459; }
+  .oc-eff .oc-pill-label { color: #27500A; }
+  .oc-eff .oc-pill-desc { color: #3B6D11; }
+  .oc-case { background: #E6F1FB; border-color: #85B7EB; }
+  .oc-case .oc-pill-label { color: #0C447C; }
+  .oc-case .oc-pill-desc { color: #185FA5; }
+  .oc-org { background: #EEEDFE; border-color: #AFA9EC; }
+  .oc-org .oc-pill-label { color: #3C3489; }
+  .oc-org .oc-pill-desc { color: #534AB7; }
+  @media (prefers-color-scheme: dark) {
+    .oc-eff { background: #173404; border-color: #3B6D11; }
+    .oc-eff .oc-pill-label { color: #C0DD97; }
+    .oc-eff .oc-pill-desc { color: #97C459; }
+    .oc-case { background: #042C53; border-color: #185FA5; }
+    .oc-case .oc-pill-label { color: #B5D4F4; }
+    .oc-case .oc-pill-desc { color: #85B7EB; }
+    .oc-org { background: #26215C; border-color: #534AB7; }
+    .oc-org .oc-pill-label { color: #CECBF6; }
+    .oc-org .oc-pill-desc { color: #AFA9EC; }
+  }
+
+  .legend { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 1.25rem; padding: 12px 14px; background: var(--color-background-secondary); border-radius: var(--border-radius-md); }
+  .leg-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--color-text-secondary); }
+  .leg-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .dot-now { background: #D85A30; } .dot-q2 { background: #639922; } .dot-q3 { background: #378ADD; } .dot-q4 { background: #888780; }
+
+  .goal-card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1.25rem; margin-bottom: 1rem; }
+  .goal-card:hover { border-color: var(--color-border-secondary); }
+  .goal-top { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px; }
+  .goal-icon { width: 36px; height: 36px; border-radius: var(--border-radius-md); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .goal-meta { flex: 1; }
+  .goal-title { font-size: 15px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 2px; }
+  .goal-why { font-size: 13px; color: var(--color-text-secondary); line-height: 1.5; }
+  .goal-horizon { font-size: 11px; font-weight: 500; padding: 2px 8px; border-radius: 20px; border: 0.5px solid; margin-top: 6px; display: inline-block; }
+
+  .icon-eff { background: #EAF3DE; }
+  .icon-case { background: #E6F1FB; }
+  .icon-org { background: #EEEDFE; }
+  .icon-svg-eff { color: #3B6D11; }
+  .icon-svg-case { color: #185FA5; }
+  .icon-svg-org { color: #534AB7; }
+  @media (prefers-color-scheme: dark) {
+    .icon-eff { background: #173404; } .icon-case { background: #042C53; } .icon-org { background: #26215C; }
+    .icon-svg-eff { color: #C0DD97; } .icon-svg-case { color: #B5D4F4; } .icon-svg-org { color: #CECBF6; }
+  }
+
+  .hz-now { background: #FAECE7; border-color: #F0997B; color: #712B13; }
+  .hz-q2  { background: #EAF3DE; border-color: #97C459;  color: #27500A; }
+  .hz-q3  { background: #E6F1FB; border-color: #85B7EB;  color: #0C447C; }
+  .hz-q4  { background: #F1EFE8; border-color: #B4B2A9;  color: #444441; }
+  @media (prefers-color-scheme: dark) {
+    .hz-now { background: #4A1B0C; border-color: #993C1D; color: #F5C4B3; }
+    .hz-q2  { background: #173404; border-color: #3B6D11; color: #C0DD97; }
+    .hz-q3  { background: #042C53; border-color: #185FA5; color: #B5D4F4; }
+    .hz-q4  { background: #2C2C2A; border-color: #5F5E5A; color: #D3D1C7; }
+  }
+
+  .kr-section { margin-top: 12px; padding-top: 12px; border-top: 0.5px solid var(--color-border-tertiary); }
+  .kr-label { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-text-tertiary); margin-bottom: 8px; }
+  .kr-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 8px; }
+  .kr-item { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 10px 12px; }
+  .kr-placeholder { font-size: 16px; font-weight: 500; color: var(--color-text-tertiary); font-style: italic; margin-bottom: 2px; }
+  .kr-desc { font-size: 12px; color: var(--color-text-secondary); line-height: 1.4; }
+
+  .init-section { margin-top: 12px; padding-top: 12px; border-top: 0.5px solid var(--color-border-tertiary); }
+  .init-label { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-text-tertiary); margin-bottom: 8px; }
+  .init-list { display: flex; flex-direction: column; gap: 5px; }
+  .init-row { display: flex; align-items: baseline; gap: 8px; font-size: 13px; }
+  .init-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; margin-top: 6px; }
+  .init-name { color: var(--color-text-secondary); flex: 1; line-height: 1.4; }
+  .init-when { font-size: 11px; color: var(--color-text-tertiary); white-space: nowrap; flex-shrink: 0; }
+
+  .summary-group { margin-bottom: 1.5rem; }
+  .summary-group-label { font-size: 13px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 8px; padding-bottom: 6px; border-bottom: 0.5px solid var(--color-border-tertiary); }
+  .summary-row { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 6px 0; border-bottom: 0.5px solid var(--color-border-tertiary); }
+  .summary-row-title { font-size: 13px; color: var(--color-text-secondary); flex: 1; }
+  .summary-row-hz { font-size: 11px; color: var(--color-text-tertiary); white-space: nowrap; }
+</style>
+</head>
+<body>
+
+<h2 class="sr-only">Goals-based Product &amp; Technology Roadmap, April 2026</h2>
+
+<div class="nav">
+  <button class="ntab active" onclick="showV('goals', this)">Goals &amp; outcomes</button>
+  <button class="ntab" onclick="showV('summary', this)">Executive summary</button>
+</div>
+
+<div id="view-goals" class="view active">
+  <div class="outcome-strip">
+    <div class="oc-pill oc-eff">
+      <div class="oc-pill-label">Operational efficiency</div>
+      <div class="oc-pill-desc">Reduce manual overhead, consolidate systems, cut cost-per-case</div>
+    </div>
+    <div class="oc-pill oc-case">
+      <div class="oc-pill-label">Client &amp; case outcomes</div>
+      <div class="oc-pill-desc">Faster resolution, higher data quality, reduced legal risk</div>
+    </div>
+    <div class="oc-pill oc-org">
+      <div class="oc-pill-label">Org alignment</div>
+      <div class="oc-pill-desc">Clearer ownership, shared visibility, faster decision-making</div>
+    </div>
+  </div>
+
+  <div class="legend">
+    <div class="leg-item"><div class="leg-dot dot-now"></div>Now — April</div>
+    <div class="leg-item"><div class="leg-dot dot-q2"></div>May – June</div>
+    <div class="leg-item"><div class="leg-dot dot-q3"></div>Q3 (Jul – Sep)</div>
+    <div class="leg-item"><div class="leg-dot dot-q4"></div>Q4 (Oct – Dec)</div>
+  </div>
+
+  <div id="cards-container"></div>
+</div>
+
+<div id="view-summary" class="view">
+  <div id="summary-container"></div>
+</div>
+
+<script>
+const GOALS = [
+  {
+    id: "tms",
+    title: "Build a single, scalable tort management system",
+    why: "The organization currently manages tort operations across fragmented systems and processes. A unified TMS reduces resolution time, improves data accuracy, and creates a defensible audit trail for court and settlement deadlines.",
+    outcome: "case",
+    horizon: "now",
+    horizonLabel: "Apr 2026 – Q4 2026",
+    krs: [
+      { desc: "Reduction in time-to-resolve per case vs. baseline" },
+      { desc: "Data entry errors eliminated by unified intake" },
+      { desc: "% of tort workflows migrated to TMS by Q4" },
+    ],
+    initiatives: [
+      { name: "TMS Discovery Phase 1 — pre-alignment & ingestion", when: "Apr", dot: "dot-now" },
+      { name: "TMS Discovery Phases 2–3 — deep discovery & synthesis", when: "May", dot: "dot-q2" },
+      { name: "TMS Concept Definition — designs, user stories, architecture", when: "May", dot: "dot-q2" },
+      { name: "TMS build begins, staggered releases", when: "Jun – Q4", dot: "dot-q3" },
+      { name: "Data infrastructure & analytics overhaul aligned to TMS", when: "Q3", dot: "dot-q3" },
+    ]
+  },
+  {
+    id: "court",
+    title: "Meet all court-ordered & major tort deadlines without disruption",
+    why: "LAFJ, Maui, and PFAS GA represent active legal obligations. Missing deadlines creates compounding liability and erodes client trust. The team must maintain continuous delivery capacity alongside longer-horizon build work.",
+    outcome: "case",
+    horizon: "now",
+    horizonLabel: "Ongoing",
+    krs: [
+      { desc: "% of court-ordered deadlines met on time" },
+      { desc: "Incidents caused by system degradation (target: zero)" },
+      { desc: "Time to resolve critical bottlenecks (e.g., LAFJ internet)" },
+    ],
+    initiatives: [
+      { name: "LAFJ PFS/LQ Form Enhancements v1.1", when: "Apr", dot: "dot-now" },
+      { name: "PFAS GA contract replacement across intake channels", when: "Apr", dot: "dot-now" },
+      { name: "Maui bulk import dismissal docs (ARK-gated)", when: "Apr", dot: "dot-now" },
+      { name: "LAFJ internet upgrade", when: "May", dot: "dot-q2" },
+      { name: "LAFJ SurveyJS QC capabilities", when: "May", dot: "dot-q2" },
+      { name: "PFAS Arizona launch", when: "Jun", dot: "dot-q2" },
+      { name: "Prineville tort launch", when: "Jun", dot: "dot-q2" },
+      { name: "Continued court/settlement deadline support", when: "Q3 – Q4", dot: "dot-q3" },
+    ]
+  },
+  {
+    id: "identity",
+    title: "Establish clean, secure identity & systems infrastructure",
+    why: "Fragmented identity management and an ungoverned systems list create security exposure, onboarding friction, and hidden costs. Resolving this unlocks faster IT operations and is a prerequisite for future system consolidation.",
+    outcome: "eff",
+    horizon: "q2",
+    horizonLabel: "Apr – May 2026",
+    krs: [
+      { desc: "Reduction in orphaned accounts / access incidents" },
+      { desc: "Systems catalogued in master list (target: 100%)" },
+      { desc: "Onboarding time reduction after OneLogin completion" },
+    ],
+    initiatives: [
+      { name: "OneLogin cleanup", when: "Apr", dot: "dot-now" },
+      { name: "Google Workspace cleanup", when: "May", dot: "dot-q2" },
+      { name: "Master systems list consolidation", when: "May", dot: "dot-q2" },
+    ]
+  },
+  {
+    id: "finance",
+    title: "Gain full visibility and control over technology spend",
+    why: "Without a consolidated view of billable tech systems and budget allocation, the organization cannot make confident investment decisions or accurately attribute costs to torts. Ramp and budget tooling close this gap.",
+    outcome: "eff",
+    horizon: "q2",
+    horizonLabel: "May 2026 → Q3",
+    krs: [
+      { desc: "% of tech spend categorized & attributed by tort/function" },
+      { desc: "Time to produce monthly budget report vs. current baseline" },
+      { desc: "Cost savings identified through vendor consolidation" },
+    ],
+    initiatives: [
+      { name: "Ramp launch — AMEX vendor transition", when: "May", dot: "dot-q2" },
+      { name: "Tech budget artifacts review — 2025 exports & framework", when: "May", dot: "dot-q2" },
+      { name: "Billable tech systems / budget overhaul", when: "May – Q3", dot: "dot-q2" },
+      { name: "Finance support — Martus", when: "Q3", dot: "dot-q3" },
+    ]
+  },
+  {
+    id: "comms",
+    title: "Modernize internal communications and create reliable information flow",
+    why: "The organization lacks a consistent, scalable channel for business updates and team communication. Workvivo and Slack migration establish shared infrastructure that reduces noise and ensures updates reach the right people reliably.",
+    outcome: "org",
+    horizon: "now",
+    horizonLabel: "Apr – May 2026",
+    krs: [
+      { desc: "Employee reach rate for business updates (Workvivo)" },
+      { desc: "% of teams migrated to Slack by end of May" },
+      { desc: "Reduction in cross-channel confusion incidents" },
+    ],
+    initiatives: [
+      { name: "Workvivo v2 — Business Update Flow", when: "Apr", dot: "dot-now" },
+      { name: "Slack migration", when: "May", dot: "dot-q2" },
+      { name: "Unified Support intake launched", when: "Q3", dot: "dot-q3" },
+    ]
+  },
+  {
+    id: "clarity",
+    title: "Give leadership real-time visibility into P&T operations",
+    why: "Without a live view of P&T work, leadership must rely on periodic updates that are always slightly stale. Op Model v2 and time tracking tooling make capacity, priorities, and progress legible on demand.",
+    outcome: "org",
+    horizon: "q2",
+    horizonLabel: "Ongoing into Q3",
+    krs: [
+      { desc: "% of P&T work tracked and attributable in real time" },
+      { desc: "Leadership confidence score in roadmap visibility (survey)" },
+      { desc: "Time allocation accuracy vs. actual hours logged" },
+    ],
+    initiatives: [
+      { name: "P&T Op Model v2 — visibility & clarity", when: "Ongoing", dot: "dot-now" },
+      { name: "Time tracking / allocation implementation", when: "Q3", dot: "dot-q3" },
+    ]
+  },
+  {
+    id: "growth",
+    title: "Position the organization for new tort and business expansion",
+    why: "Erin, the ERP, and new tort implementations represent the next growth layer. They are deliberately deferred until the foundation is stable, but require active discovery now so execution can begin on schedule in Q3–Q4.",
+    outcome: "case",
+    horizon: "q3",
+    horizonLabel: "Q3 – Q4 2026",
+    krs: [
+      { desc: "Erin reactivation milestone hit by end of Q3" },
+      { desc: "ERP design scope approved by Q3" },
+      { desc: "New tort implementations launched (investment-dependent)" },
+    ],
+    initiatives: [
+      { name: "Erin reactivation", when: "Q3", dot: "dot-q3" },
+      { name: "Business Development ERP design — graduates from discovery", when: "Q3", dot: "dot-q3" },
+      { name: "Marketing & Ground Campaign foundational initiatives", when: "Q3", dot: "dot-q3" },
+      { name: "New tort implementation (investment-dependent)", when: "Q3 – Q4", dot: "dot-q3" },
+    ]
+  },
+];
+
+const OUTCOME_LABELS = { eff: "Operational efficiency", case: "Client & case outcomes", org: "Org alignment" };
+const HZ_CLASS = { now: "hz-now", q2: "hz-q2", q3: "hz-q3", q4: "hz-q4" };
+
+const ICON_SVG = {
+  eff: `<svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 13L7 9L10 12L15 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 6H15V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  case: `<svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="4" width="12" height="10" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M6 8h6M6 11h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>`,
+  org: `<svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="9" cy="5" r="2" stroke="currentColor" stroke-width="1.5"/><circle cx="4" cy="13" r="2" stroke="currentColor" stroke-width="1.5"/><circle cx="14" cy="13" r="2" stroke="currentColor" stroke-width="1.5"/><path d="M9 7v2M9 9L4 11M9 9l5 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>`
+};
+
+function buildCard(g) {
+  const krsHtml = g.krs.map(k => `
+    <div class="kr-item">
+      <div class="kr-placeholder">TBD</div>
+      <div class="kr-desc">${k.desc}</div>
+    </div>`).join('');
+
+  const initsHtml = g.initiatives.map(i => `
+    <div class="init-row">
+      <div class="init-dot ${i.dot}"></div>
+      <div class="init-name">${i.name}</div>
+      <div class="init-when">${i.when}</div>
+    </div>`).join('');
+
+  return `
+  <div class="goal-card">
+    <div class="goal-top">
+      <div class="goal-icon icon-${g.outcome}">
+        <span class="icon-svg-${g.outcome}">${ICON_SVG[g.outcome]}</span>
+      </div>
+      <div class="goal-meta">
+        <div class="goal-title">${g.title}</div>
+        <div class="goal-why">${g.why}</div>
+        <span class="goal-horizon ${HZ_CLASS[g.horizon]}">${g.horizonLabel}</span>
+      </div>
+    </div>
+    <div class="kr-section">
+      <div class="kr-label">Key results — fill in your targets</div>
+      <div class="kr-grid">${krsHtml}</div>
+    </div>
+    <div class="init-section">
+      <div class="init-label">Initiatives</div>
+      <div class="init-list">${initsHtml}</div>
+    </div>
+  </div>`;
+}
+
+function buildSummary() {
+  let html = '';
+  ["eff", "case", "org"].forEach(oc => {
+    const gs = GOALS.filter(g => g.outcome === oc);
+    html += `<div class="summary-group">
+      <div class="summary-group-label">${OUTCOME_LABELS[oc]}</div>`;
+    gs.forEach(g => {
+      html += `<div class="summary-row">
+        <span class="summary-row-title">${g.title}</span>
+        <span class="summary-row-hz">${g.horizonLabel}</span>
+      </div>`;
+    });
+    html += '</div>';
+  });
+  return html;
+}
+
+document.getElementById('cards-container').innerHTML = GOALS.map(buildCard).join('');
+document.getElementById('summary-container').innerHTML = buildSummary();
+
+function showV(id, btn) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.ntab').forEach(t => t.classList.remove('active'));
+  document.getElementById('view-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>
