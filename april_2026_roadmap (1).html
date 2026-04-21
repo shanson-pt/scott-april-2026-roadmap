@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>April 2026 Roadmap — Product & Technology</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --color-text-primary: #1a1a18;
+    --color-text-secondary: #5f5e5a;
+    --color-text-tertiary: #888780;
+    --color-background-primary: #ffffff;
+    --color-background-secondary: #f5f4f0;
+    --color-border-tertiary: rgba(0,0,0,0.12);
+    --color-border-secondary: rgba(0,0,0,0.22);
+    --color-border-primary: rgba(0,0,0,0.32);
+    --border-radius-md: 8px;
+    --border-radius-lg: 12px;
+    --font-sans: system-ui, -apple-system, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --color-text-primary: #f0ede6;
+      --color-text-secondary: #a8a49c;
+      --color-text-tertiary: #6e6c66;
+      --color-background-primary: #1c1c1a;
+      --color-background-secondary: #252522;
+      --color-border-tertiary: rgba(255,255,255,0.10);
+      --color-border-secondary: rgba(255,255,255,0.18);
+      --color-border-primary: rgba(255,255,255,0.28);
+    }
+  }
+  body {
+    font-family: var(--font-sans);
+    background: var(--color-background-primary);
+    color: var(--color-text-primary);
+    padding: 2rem 1.5rem;
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  .rm-header { margin-bottom: 1.5rem; }
+  .rm-header h2 { font-size: 20px; font-weight: 500; color: var(--color-text-primary); }
+  .rm-header p { font-size: 13px; color: var(--color-text-secondary); margin-top: 4px; }
+
+  .view-toggle { display: flex; gap: 6px; margin-bottom: 1.25rem; flex-wrap: wrap; }
+  .vtab {
+    font-size: 12px; padding: 5px 14px;
+    border-radius: 20px;
+    border: 0.5px solid var(--color-border-secondary);
+    background: transparent;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    font-family: var(--font-sans);
+    transition: background 0.15s;
+  }
+  .vtab.active {
+    background: var(--color-background-secondary);
+    color: var(--color-text-primary);
+    border-color: var(--color-border-primary);
+  }
+  .view { display: none; }
+  .view.active { display: block; }
+
+  /* Timeline */
+  .month-block { margin-bottom: 1rem; }
+  .month-row { display: flex; align-items: flex-start; gap: 12px; }
+  .month-dot-col { display: flex; flex-direction: column; align-items: center; padding-top: 3px; }
+  .month-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .month-line { width: 1px; background: var(--color-border-tertiary); margin-top: 4px; }
+  .month-content { flex: 1; padding-bottom: 1rem; }
+  .month-title { font-size: 14px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 6px; }
+  .item-list { display: flex; flex-direction: column; gap: 4px; }
+  .item { display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: var(--color-text-secondary); line-height: 1.4; }
+  .item-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
+  .dot-apr { background: #D85A30; } .dot-may { background: #378ADD; }
+  .dot-jun { background: #7F77DD; } .dot-q3 { background: #639922; } .dot-q4 { background: #888780; }
+  .mon-apr { background: #D85A30; } .mon-may { background: #378ADD; }
+  .mon-jun { background: #7F77DD; } .mon-q3 { background: #639922; } .mon-q4 { background: #888780; }
+
+  .tag { display: inline-block; font-size: 11px; padding: 2px 7px; border-radius: 20px; margin-left: 4px; font-weight: 500; vertical-align: middle; flex-shrink: 0; }
+  .tag-tort { background: #FAECE7; color: #993C1D; border: 0.5px solid #F0997B; }
+  .tag-it   { background: #EAF3DE; color: #3B6D11; border: 0.5px solid #97C459; }
+  .tag-launch { background: #EEEDFE; color: #534AB7; border: 0.5px solid #AFA9EC; }
+  .tag-ops  { background: #F1EFE8; color: #5F5E5A; border: 0.5px solid #B4B2A9; }
+  .tag-data { background: #E6F1FB; color: #185FA5; border: 0.5px solid #85B7EB; }
+  @media (prefers-color-scheme: dark) {
+    .tag-tort { background: #4A1B0C; color: #F5C4B3; border-color: #993C1D; }
+    .tag-it   { background: #173404; color: #C0DD97; border-color: #3B6D11; }
+    .tag-launch { background: #26215C; color: #CECBF6; border-color: #534AB7; }
+    .tag-ops  { background: #2C2C2A; color: #D3D1C7; border-color: #5F5E5A; }
+    .tag-data { background: #042C53; color: #B5D4F4; border-color: #185FA5; }
+  }
+
+  /* Priorities */
+  .tier-section { margin-bottom: 1.25rem; }
+  .tier-label { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-text-tertiary); margin-bottom: 8px; padding-left: 2px; }
+  .tier-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 8px; }
+  .tier-pill { padding: 8px 12px; border-radius: var(--border-radius-md); font-size: 13px; font-weight: 400; border: 0.5px solid; }
+  .t1 { background: #FAECE7; border-color: #F0997B; color: #712B13; }
+  .t2 { background: #E6F1FB; border-color: #85B7EB; color: #0C447C; }
+  .t3 { background: #EAF3DE; border-color: #97C459; color: #27500A; }
+  .t4 { background: #EEEDFE; border-color: #AFA9EC; color: #3C3489; }
+  .t5 { background: #F1EFE8; border-color: #B4B2A9; color: #444441; }
+  @media (prefers-color-scheme: dark) {
+    .t1 { background: #4A1B0C; border-color: #993C1D; color: #F5C4B3; }
+    .t2 { background: #042C53; border-color: #185FA5; color: #B5D4F4; }
+    .t3 { background: #173404; border-color: #3B6D11; color: #C0DD97; }
+    .t4 { background: #26215C; border-color: #534AB7; color: #CECBF6; }
+    .t5 { background: #2C2C2A; border-color: #5F5E5A; color: #D3D1C7; }
+  }
+
+  /* What changed */
+  .changed-item { font-size: 13px; color: var(--color-text-secondary); padding: 8px 12px; border-left: 2px solid var(--color-border-secondary); margin-bottom: 6px; line-height: 1.5; border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0; background: var(--color-background-secondary); }
+  .changed-item strong { font-weight: 500; color: var(--color-text-primary); }
+</style>
+</head>
+<body>
+
+<div class="rm-header">
+  <h2>Product & Technology Roadmap</h2>
+  <p>April 2026 update — dates will evolve as scoping and discovery conclude</p>
+</div>
+
+<div class="view-toggle">
+  <button class="vtab active" onclick="showView('timeline', this)">Timeline</button>
+  <button class="vtab" onclick="showView('priorities', this)">Priorities</button>
+  <button class="vtab" onclick="showView('changes', this)">What changed</button>
+</div>
+
+<!-- TIMELINE -->
+<div id="view-timeline" class="view active">
+  <div class="timeline">
+
+    <div class="month-block">
+      <div class="month-row">
+        <div class="month-dot-col">
+          <div class="month-dot mon-apr"></div>
+          <div class="month-line" style="height:120px;"></div>
+        </div>
+        <div class="month-content">
+          <div class="month-title">April 2026 <span style="font-size:11px;font-weight:400;color:var(--color-text-tertiary);">— now</span></div>
+          <div class="item-list">
+            <div class="item"><div class="item-dot dot-apr"></div><span>LAFJ PFS/LQ Form Enhancements v1.1 — date splits, vehicle claims, property adjustments <span class="tag tag-tort">tort</span></span></div>
+            <div class="item"><div class="item-dot dot-apr"></div><span>PFAS GA contract replacement across intake channels <span class="tag tag-tort">tort</span></span></div>
+            <div class="item"><div class="item-dot dot-apr"></div><span>Tort Management System Discovery Phase 1 — alignment & ingestion <span class="tag tag-tort">tort</span></span></div>
+            <div class="item"><div class="item-dot dot-apr"></div><span>OneLogin cleanup <span class="tag tag-it">IT</span></span></div>
+            <div class="item"><div class="item-dot dot-apr"></div><span>Maui bulk import dismissal docs — gated on ARK delivery <span class="tag tag-tort">tort</span></span></div>
+            <div class="item"><div class="item-dot dot-apr"></div><span>Workvivo v2 Business Update Flow <span class="tag tag-ops">ops</span></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="month-block">
+      <div class="month-row">
+        <div class="month-dot-col">
+          <div class="month-dot mon-may"></div>
+          <div class="month-line" style="height:145px;"></div>
+        </div>
+        <div class="month-content">
+          <div class="month-title">May 2026</div>
+          <div class="item-list">
+            <div class="item"><div class="item-dot dot-may"></div><span>Tort Management System Discovery Phases 2–3: deep discovery → synthesis &amp; concepts <span class="tag tag-tort">tort</span></span></div>
+            <div class="item"><div class="item-dot dot-may"></div><span>Tort Management System Concept Definition (Phase 4): designs, user stories, architecture <span class="tag tag-tort">tort</span></span></div>
+            <div class="item"><div class="item-dot dot-may"></div><span>LAFJ internet upgrade (delayed by supply chain) <span class="tag tag-it">IT</span></span></div>
+            <div class="item"><div class="item-dot dot-may"></div><span>LAFJ SurveyJS QC capabilities — client/analyst distinction, post-signature edits <span class="tag tag-tort">tort</span></span></div>
+            <div class="item"><div class="item-dot dot-may"></div><span>Tech budget artifacts review — 2025 exports &amp; allocation framework <span class="tag tag-ops">ops</span></span></div>
+            <div class="item"><div class="item-dot dot-may"></div><span>Google Workspace cleanup + master system list <span class="tag tag-it">IT</span></span></div>
+            <div class="item"><div class="item-dot dot-may"></div><span>Ramp launch — AMEX vendor transition <span class="tag tag-launch">launch</span></span></div>
+            <div class="item"><div class="item-dot dot-may"></div><span>Slack migration <span class="tag tag-ops">ops</span></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="month-block">
+      <div class="month-row">
+        <div class="month-dot-col">
+          <div class="month-dot mon-jun"></div>
+          <div class="month-line" style="height:90px;"></div>
+        </div>
+        <div class="month-content">
+          <div class="month-title">June 2026</div>
+          <div class="item-list">
+            <div class="item"><div class="item-dot dot-jun"></div><span>Tort Management System build &amp; delivery begins <span class="tag tag-tort">tort</span></span></div>
+            <div class="item"><div class="item-dot dot-jun"></div><span>Prineville tort launch — investment-dependent <span class="tag tag-launch">launch</span></span></div>
+            <div class="item"><div class="item-dot dot-jun"></div><span>PFAS Arizona launch — scoping in progress <span class="tag tag-launch">launch</span></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="month-block">
+      <div class="month-row">
+        <div class="month-dot-col">
+          <div class="month-dot mon-q3"></div>
+          <div class="month-line" style="height:165px;"></div>
+        </div>
+        <div class="month-content">
+          <div class="month-title">Q3 — July through September</div>
+          <div class="item-list">
+            <div class="item"><div class="item-dot dot-q3"></div><span>Tort Management System staggered releases continue <span class="tag tag-tort">tort</span></span></div>
+            <div class="item"><div class="item-dot dot-q3"></div><span>Data infrastructure — reporting &amp; analytics overhaul <span class="tag tag-data">data</span></span></div>
+            <div class="item"><div class="item-dot dot-q3"></div><span>Erin reactivation <span class="tag tag-launch">launch</span></span></div>
+            <div class="item"><div class="item-dot dot-q3"></div><span>Unified Support intake launched <span class="tag tag-ops">ops</span></span></div>
+            <div class="item"><div class="item-dot dot-q3"></div><span>Business Development ERP design — graduates from discovery <span class="tag tag-ops">ops</span></span></div>
+            <div class="item"><div class="item-dot dot-q3"></div><span>Marketing &amp; Ground Campaign foundational initiatives <span class="tag tag-ops">ops</span></span></div>
+            <div class="item"><div class="item-dot dot-q3"></div><span>Finance support — Martus <span class="tag tag-ops">ops</span></span></div>
+            <div class="item"><div class="item-dot dot-q3"></div><span>New tort implementation — investment-dependent <span class="tag tag-tort">tort</span></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="month-block">
+      <div class="month-row">
+        <div class="month-dot-col">
+          <div class="month-dot mon-q4"></div>
+        </div>
+        <div class="month-content">
+          <div class="month-title">Q4 — October through December</div>
+          <div class="item-list">
+            <div class="item"><div class="item-dot dot-q4"></div><span>Tort Management System continued build &amp; support <span class="tag tag-tort">tort</span></span></div>
+            <div class="item"><div class="item-dot dot-q4"></div><span>Court/settlement deadline support ongoing <span class="tag tag-tort">tort</span></span></div>
+            <div class="item"><div class="item-dot dot-q4"></div><span>New tort implementation — investment-dependent <span class="tag tag-tort">tort</span></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- PRIORITIES -->
+<div id="view-priorities" class="view">
+  <div class="tier-section">
+    <div class="tier-label">Tier 1 — Non-negotiables</div>
+    <div class="tier-grid">
+      <div class="tier-pill t1">Court-ordered &amp; major tort support</div>
+      <div class="tier-pill t1">Major bottleneck support (LAFJ internet)</div>
+      <div class="tier-pill t1">Tort Management System discovery &amp; stabilization</div>
+    </div>
+  </div>
+  <div class="tier-section">
+    <div class="tier-label">Tier 2 — High-impact enablement</div>
+    <div class="tier-grid">
+      <div class="tier-pill t2">Priority dashboards &amp; function-wide items</div>
+      <div class="tier-pill t2">Workvivo v2 — Business Update Flow</div>
+      <div class="tier-pill t2">P&amp;T Op Model v2 — visibility &amp; clarity</div>
+    </div>
+  </div>
+  <div class="tier-section">
+    <div class="tier-label">Tier 3 — Foundational infrastructure</div>
+    <div class="tier-grid">
+      <div class="tier-pill t3">IT Identity Management</div>
+      <div class="tier-pill t3">OneLogin + Google Cleanup</div>
+      <div class="tier-pill t3">Master Systems List</div>
+      <div class="tier-pill t3">Time Tracking / Allocation</div>
+    </div>
+  </div>
+  <div class="tier-section">
+    <div class="tier-label">Tier 4 — Planned launches</div>
+    <div class="tier-grid">
+      <div class="tier-pill t4">PFAS Arizona Launch</div>
+      <div class="tier-pill t4">Prineville Tort Launch</div>
+      <div class="tier-pill t4">Ramp Launch</div>
+    </div>
+  </div>
+  <div class="tier-section">
+    <div class="tier-label">Tier 5 — Operational consolidation</div>
+    <div class="tier-grid">
+      <div class="tier-pill t5">P&amp;T Budgets &amp; Categories</div>
+      <div class="tier-pill t5">Unified Support intake</div>
+      <div class="tier-pill t5">Slack Migration</div>
+    </div>
+  </div>
+  <div class="tier-section">
+    <div class="tier-label">Tier 6 — Strategic discovery</div>
+    <div class="tier-grid">
+      <div class="tier-pill t5" style="font-style:italic;">ERP Discovery</div>
+    </div>
+  </div>
+</div>
+
+<!-- WHAT CHANGED -->
+<div id="view-changes" class="view">
+  <div class="changed-item"><strong>Director of IT hired (Allen)</strong> — now owns OneLogin, Master Systems List, Unified Support, Slack Migration, and IT components of Ramp.</div>
+  <div class="changed-item"><strong>Erin strategically delayed</strong> — while investment and brand agreements finalize. Resources shifted to Tort Management System stabilization.</div>
+  <div class="changed-item"><strong>Company Communication Protocol split</strong> — into Workvivo (v1 launched) and Slack Migration.</div>
+  <div class="changed-item"><strong>Function-to-Portfolio Mapping largely complete</strong> — now a foundational input to Tort Management System discovery.</div>
+  <div class="changed-item"><strong>Finance System Overhaul narrowed</strong> — to Ramp Launch + Billable Tech Systems / Budget Overhaul. Martus-related support moves to ~Q3.</div>
+  <div class="changed-item"><strong>System Audit, Consolidation, &amp; Clean-Up folded</strong> — into Identity Management + Master Systems List.</div>
+  <div class="changed-item"><strong>Erin Instrument Hand-off complete.</strong></div>
+</div>
+
+<script>
+function showView(id, btn) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.vtab').forEach(t => t.classList.remove('active'));
+  document.getElementById('view-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>
